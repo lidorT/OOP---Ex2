@@ -1,17 +1,17 @@
 package dataStructure;
+import java.util.ArrayList;
 
 import utils.Point3D;
 
 public class Node implements node_data{
 
 	public int key;
-	//public Edge2[] edges;
+	public 	ArrayList<Edge> edges;
 	private Point3D location;
 	public double weight;
 	public int previous;
-	public boolean visited;
 	public String info;
-	int tag;
+	int tag=0;
 	
 	public Node(){
 		
