@@ -7,7 +7,7 @@ public class Edge implements edge_data {
 	public int tag;
 	public double weight;
 	public String info;
-	
+
 	
 	public Edge(){
 		

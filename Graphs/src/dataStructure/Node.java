@@ -1,12 +1,13 @@
 package dataStructure;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import utils.Point3D;
 
 public class Node implements node_data{
 
 	public int key;
-	public 	ArrayList<Edge> edges;
+	HashMap<Integer, Edge> edges= new HashMap<Integer, Edge>();
 	private Point3D location;
 	public double weight;
 	public int previous;
@@ -56,7 +57,7 @@ public class Node implements node_data{
 		return this.weight;
 	}
 
-
+	
 	public void setWeight(double w) {
 		this.weight=w;
 		

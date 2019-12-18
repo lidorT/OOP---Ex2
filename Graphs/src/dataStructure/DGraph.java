@@ -11,54 +11,47 @@ import java.util.Collection;
 public class DGraph implements graph{
 
 	private int vertices;
-	private HashMap<Node,List<Edge>> NodeMap =  new HashMap<>();
-	private HashMap<Integer,Edge> EdgeMap =  new HashMap<>();
+	private HashMap<Integer,Node> NodeMap =  new HashMap<Integer,Node>();
+	//private HashMap<Integer,Edge> EdgeMap =  new HashMap<>();
+	
+	
+	
+	
 	public node_data getNode(int key) { 
 
-		return (node_data) this.NodeMap.get(key);
+		return this.NodeMap.get(key);
 	}
 
 	
 	public edge_data getEdge(int src, int dest) {
 			
-			Edge temp = new Edge();
-			temp = this.EdgeMap.get(src);
-			if (temp.getDest()==dest) {
-				return temp;
-				
-			}
-			temp=temp.; // Java HashMap should make an array list in case of collotion wtf?
-			
-			
+		Edge temp = new Edge();
+		temp = this.NodeMap.get(src).edges.get(dest);
 		
-		return null;
+		
+		return temp;
 		
 	}
 
 	
 	public void addNode(node_data n) {
 	
-	
-		if(!NodeMap.containsKey(n)) {
-			vertices++;
-			NodeMap.put((Node) n, new ArrayList<Edge>());
-			Node pointer =  new Node();
-			pointer = (Node) n;
-			Iterator<Edge> iter = pointer.edges.iterator();
-
-			while (iter.hasNext()){
-				Edge temp = iter.next();
-				EdgeMap.put(temp.getSrc(), temp);
-						
-				}
-			
+		if (!this.NodeMap.containsKey(n.getKey())) {
+		this.NodeMap.put(n.getKey(), (Node) n);
+		vertices++;
 		}
 	}
 
 	
 	public void connect(int src, int dest, double w) {
 		
+		if (this.NodeMap.containsKey(src)) {
+			Edge temp = new Edge(src,dest,w);
+			
+			this.NodeMap.get(src).edges.put(dest, temp);
 		
+			
+		}
 	}
 
 
@@ -91,4 +84,17 @@ public class DGraph implements graph{
 		return 0;
 	}
 
+	
+	// Private methods
+	
+	
+	
+	public Node srcGetNode(int src) {
+		
+		return null;
+		
+		
+	}
+	
+	
 }
