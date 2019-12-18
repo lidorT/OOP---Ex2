@@ -12,7 +12,7 @@ public class DGraph implements graph{
 
 	private int vertices;
 	private HashMap<Node,List<Edge>> NodeMap =  new HashMap<>();
-	private HashMap<Edge,List<Edge>> EdgeMap =  new HashMap<>();
+	private HashMap<Integer,Edge> EdgeMap =  new HashMap<>();
 	public node_data getNode(int key) { 
 
 		return (node_data) this.NodeMap.get(key);
@@ -20,23 +20,17 @@ public class DGraph implements graph{
 
 	
 	public edge_data getEdge(int src, int dest) {
-		/// not good but nice,
-		//// the idea of returning with O(1) is based on the add Node to the Graph,
-		// each time we add a node we also add Pointers to his Edges to the EdgesHashMap
-		// Then we can return it withing o(1) on the average case 
-		// But notice that if we enter a 10 edges graph (look image) it may be O(n/2) issue???
-		Node pointer =  new Node();
-		pointer = (Node) this.NodeMap.get(src);
-		Iterator<Edge> iter = pointer.edges.iterator();
-		
-		while (iter.hasNext()){
-			Edge temp = iter.next();
-			if (temp.dest==dest){
-				return temp;
-					
-			}
 			
-		}
+			Edge temp = new Edge();
+			temp = this.EdgeMap.get(src);
+			if (temp.getDest()==dest) {
+				return temp;
+				
+			}
+			temp=temp.; // Java HashMap should make an array list in case of collotion wtf?
+			
+			
+		
 		return null;
 		
 	}
@@ -45,9 +39,18 @@ public class DGraph implements graph{
 	public void addNode(node_data n) {
 	
 	
-		if(!Map.containsKey(n)) {
+		if(!NodeMap.containsKey(n)) {
 			vertices++;
-			Map.put((Node) n, new ArrayList<Edge>());
+			NodeMap.put((Node) n, new ArrayList<Edge>());
+			Node pointer =  new Node();
+			pointer = (Node) n;
+			Iterator<Edge> iter = pointer.edges.iterator();
+
+			while (iter.hasNext()){
+				Edge temp = iter.next();
+				EdgeMap.put(temp.getSrc(), temp);
+						
+				}
 			
 		}
 	}
