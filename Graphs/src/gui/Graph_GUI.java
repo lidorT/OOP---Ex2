@@ -4,7 +4,8 @@ import javax.swing.JFrame;
 import dataStructure.DGraph;
 import dataStructure.Node;
 import utils.Point3D;
-
+import algorithms.Graph_Algo;
+import algorithms.graph_algorithms;
 
 public class Graph_GUI {
 
@@ -45,25 +46,20 @@ public class Graph_GUI {
 		System.out.println("Node Size is :"+g.nodeSize());
 		System.out.println("Edge Size is :"+g.edgeSize());
 		System.out.println("MC Size is :"+g.getMC());
+	
+	
+		Graph_Algo test = new Graph_Algo();
 		
-		//System.out.println("ah sheli");
+		test.init(g);
 		
-		//System.out.println(g.getV());
-		g.getE(5);
-		
-		
-		//System.out.println(g.getE(5));
-		
+		Graph_Algo test2 = new Graph_Algo();
 		
 		
-		//System.out.println(g.removeNode(5));
-		System.out.println(g.removeEdge(7,5));
-		System.out.println("After shit: ");
-		System.out.println("Node Size is :"+g.nodeSize());
-		System.out.println("Edge Size is :"+g.edgeSize());
-		System.out.println("MC Size is :"+g.getMC());
+		test.save("test1.txt");
 		
+		test2.init("test1.txt");
 		
+		System.out.println("but thats alright");
 		
 	}
 

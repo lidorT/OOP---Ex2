@@ -1,38 +1,83 @@
 package algorithms;
 
-import java.util.List;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.List;
 import dataStructure.graph;
 import dataStructure.node_data;
+
 /**
  * This empty class represents the set of graph-theory algorithms
  * which should be implemented as part of Ex2 - Do edit this class.
  * @author 
  *
  */
-public class Graph_Algo implements graph_algorithms{
+public class Graph_Algo implements graph_algorithms,Serializable{
 
-	@Override
+	
+	graph ga; 
+	
+	
 	public void init(graph g) {
-		// TODO Auto-generated method stub
+	
+		this.ga=g;
 		
 	}
 
 	@Override
 	public void init(String file_name) {
-		// TODO Auto-generated method stub
+		
+		
+		try {
+			 
+            FileInputStream fileIn = new FileInputStream(file_name);
+            ObjectInputStream objectIn = new ObjectInputStream(fileIn);
+ 
+            this.ga= (graph) objectIn.readObject();
+ 
+            System.out.println("The Object has been read from the file");
+            objectIn.close();
+            fileIn.close();
+          
+        } catch (Exception ex) {
+            ex.printStackTrace();
+           
+        }
+	
 		
 	}
-
-	@Override
+	
+	
 	public void save(String file_name) {
-		// TODO Auto-generated method stub
 		
+		try {
+			FileOutputStream f = new FileOutputStream(new File(file_name));
+			ObjectOutputStream o = new ObjectOutputStream(f);
+
+			o.writeObject(this.ga);
+			o.close();
+			f.close();
+			}
+			
+			  catch (IOException e) 
+	        {
+	            e.printStackTrace();
+	            System.out.println("could not read file");
+	        }
 	}
 
-	@Override
+
 	public boolean isConnected() {
-		// TODO Auto-generated method stub
+		
+		
+		
+		
 		return false;
 	}
 
@@ -59,5 +104,10 @@ public class Graph_Algo implements graph_algorithms{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
+	
+	
+	
 }
+	
+	

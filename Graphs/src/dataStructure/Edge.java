@@ -2,7 +2,7 @@ package dataStructure;
 
 import java.io.Serializable;
 
-public class Edge implements edge_data , Serializable{
+public class Edge implements edge_data,Serializable{
 	
 	public int src;
 	public int dest;

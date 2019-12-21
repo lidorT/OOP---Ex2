@@ -5,7 +5,7 @@ import java.util.Set;
 import java.io.Serializable;
 import java.util.Collection;
 
-public class DGraph implements graph, Serializable{
+public class DGraph implements graph,Serializable{
 
 
 	private int MC;

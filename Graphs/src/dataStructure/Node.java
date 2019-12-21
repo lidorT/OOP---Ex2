@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 import utils.Point3D;
 
-public class Node implements node_data, Serializable{
+public class Node implements node_data,Serializable{
 
 	public int key;
 
