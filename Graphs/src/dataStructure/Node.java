@@ -1,13 +1,14 @@
 package dataStructure;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import utils.Point3D;
 
-public class Node implements node_data{
+public class Node implements node_data, Serializable{
 
 	public int key;
-	HashMap<Integer, Edge> edges= new HashMap<Integer, Edge>();
+
 	private Point3D location;
 	public double weight;
 	public int previous;
