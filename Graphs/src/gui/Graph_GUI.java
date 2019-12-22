@@ -3,6 +3,7 @@ import javax.swing.JFrame;
 
 import dataStructure.DGraph;
 import dataStructure.Node;
+import dataStructure.graph;
 import utils.Point3D;
 import algorithms.Graph_Algo;
 import algorithms.graph_algorithms;
@@ -41,6 +42,8 @@ public class Graph_GUI {
 		g.connect(5,9, 5.2);
 		g.connect(6,8, 5.2);
 		g.connect(7,9, 5.2);
+		g.connect(8,5, 5.2);
+		g.connect(9,6, 5.2);
 		
 		
 		System.out.println("Node Size is :"+g.nodeSize());
@@ -52,14 +55,17 @@ public class Graph_GUI {
 		
 		test.init(g);
 		
-		Graph_Algo test2 = new Graph_Algo();
+		System.out.println(test.isConnected());
 		
+		graph test2 = new DGraph();
 		
-		test.save("test1.txt");
-		
-		test2.init("test1.txt");
-		
-		System.out.println("but thats alright");
+		test2 = test.copy();
+		System.out.println(test2);
+//		test.save("test1.txt");
+//		
+//		test2.init("test1.txt");
+//		
+//		System.out.println("but thats alright");
 		
 	}
 

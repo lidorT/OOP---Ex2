@@ -18,8 +18,6 @@ public class DGraph implements graph,Serializable{
 
 	public DGraph(){
 
-
-
 		this.nodeSize=0;
 		this.edgeSize=0;
 		this.MC=0;
