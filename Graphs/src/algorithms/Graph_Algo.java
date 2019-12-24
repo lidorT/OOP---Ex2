@@ -54,7 +54,6 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 	public void init(graph g) {
 
 		this.ga=g;
-
 	}
 
 	@Override
@@ -106,80 +105,47 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 		node_data[] Nodes_arr = vertex_collect.toArray(new node_data[vertex_collect.size()]);
 		Queue<node_data> Nq = new LinkedList<node_data>();
 		int visitCounter = 0;
-		
+
 		for (int i=0;i<Nodes_arr.length && flag ;i++) {
 
-			//clearTag
+			ClearTags(ga.getV());
 			node_data current = Nodes_arr[i];
 			current.setTag(1);
 			Nq.add(current);
-			
+			visitCounter = 0;
+
 			while(!Nq.isEmpty()) {
-				
+
 				node_data head = Nq.peek();
 				Collection<edge_data> edges_collect = this.ga.getE(head.getKey());
-				
+
 				for (edge_data myEdge: edges_collect) {
-					ga.getNode(myEdge.getDest()).setTag(1);
-					if(ga.getNode(myEdge.getDest()).getTag()!=2 && !Nq.contains(ga.getNode(myEdge.getDest()))){
-					Nq.add(ga.getNode(myEdge.getDest()));
+
+					if(ga.getNode(myEdge.getDest()).getTag() != 2)
+						ga.getNode(myEdge.getDest()).setTag(1);
+
+					if(ga.getNode(myEdge.getDest()).getTag() != 2 && !Nq.contains(ga.getNode(myEdge.getDest()))){
+						Nq.add(ga.getNode(myEdge.getDest()));
 					}
 				}
+				
 				head.setTag(2);
 				if(Nq.peek().getTag() == 2){
+					
 					Nq.poll();
 					visitCounter++;
 				}
-				
+
 			}
 			if(visitCounter != Nodes_arr.length){
+				
 				flag = false;
 			}
-			
+
 		}	
 		return flag;
 	}
 
-
-
-
-	//	public boolean isConnected() {
-	//		
-	//		boolean flag = false;
-	//		Collection<node_data> Nodes = ga.getV();
-	//		
-	//		node_data start = null;
-	//		for (node_data Node : Nodes) {
-	//			if (Node != null) {
-	//				flag = true;
-	//				start = Node;
-	//				break;
-	//			}
-	//		}
-	//		
-	//		int visitedAll = DFS(ga, start.getKey(), 0);
-	//		if (visitedAll != ga.nodeSize()) return false;
-	//
-	//		Collection<node_data> ver = ga.getV();
-	//		graph reverse = new DGraph();
-	//
-	//		for (node_data v : ver) {
-	//			reverse.addNode(v);
-	//		}
-	//
-	//		for (node_data v : ver) {
-	//			LinkedList<edge_data> source = (LinkedList<edge_data>)ga.getE(v.getKey());
-	//			for (edge_data e : source) {
-	//				reverse.connect(e.getDest(), e.getSrc(), e.getWeight());
-	//			}
-	//		}
-	//
-	//		visitedAll = DFS(reverse, start.getKey(), 0);
-	//		if (visitedAll != reverse.nodeSize())
-	//			return false;
-	//
-	//		return true;
-	//	}
 
 	@Override
 	public double shortestPathDist(int src, int dest) {
@@ -240,15 +206,10 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 
 	/////////////// Private Methods /////////////////
 
-	private void ClearTags() {
-
-		Collection<node_data> NodesCollection = ga.getV();
-
+	private void ClearTags(Collection<node_data> NodesCollection) {
 
 		for (node_data temp : NodesCollection) {
-
 			temp.setTag(0);
-
 		}
 	}
 
