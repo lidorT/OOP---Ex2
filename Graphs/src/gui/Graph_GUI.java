@@ -3,8 +3,11 @@ import javax.swing.JFrame;
 
 import dataStructure.DGraph;
 import dataStructure.Node;
-import utils.Point3D;
+import dataStructure.graph;
 
+import utils.Point3D;
+import algorithms.Graph_Algo;
+import algorithms.graph_algorithms;
 
 public class Graph_GUI {
 
@@ -40,30 +43,34 @@ public class Graph_GUI {
 		g.connect(5,9, 5.2);
 		g.connect(6,8, 5.2);
 		g.connect(7,9, 5.2);
+		g.connect(8,5, 5.2);
+		g.connect(9,6, 5.2);
 		
 		
 		System.out.println("Node Size is :"+g.nodeSize());
 		System.out.println("Edge Size is :"+g.edgeSize());
 		System.out.println("MC Size is :"+g.getMC());
+	
+	
+		Graph_Algo test = new Graph_Algo();
 		
-		//System.out.println("ah sheli");
+		test.init(g);
 		
-		//System.out.println(g.getV());
-		g.getE(5);
+	//	System.out.println(test.isConnected());
 		
+		graph test2 = new DGraph();
 		
-		//System.out.println(g.getE(5));
+		test2 = test.copy();
+		System.out.println(test2);
 		
-		
-		
-		//System.out.println(g.removeNode(5));
-		System.out.println(g.removeEdge(7,5));
-		System.out.println("After shit: ");
-		System.out.println("Node Size is :"+g.nodeSize());
-		System.out.println("Edge Size is :"+g.edgeSize());
-		System.out.println("MC Size is :"+g.getMC());
+		System.out.println(test.MyDFS(g.getNode(6),g.getNode(5)));
 		
 		
+//		test.save("test1.txt");
+//		
+//		test2.init("test1.txt");
+//		
+//		System.out.println("but thats alright");
 		
 	}
 

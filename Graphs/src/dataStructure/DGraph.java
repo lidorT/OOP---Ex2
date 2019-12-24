@@ -5,7 +5,7 @@ import java.util.Set;
 import java.io.Serializable;
 import java.util.Collection;
 
-public class DGraph implements graph, Serializable{
+public class DGraph implements graph,Serializable{
 
 
 	private int MC;
@@ -17,8 +17,6 @@ public class DGraph implements graph, Serializable{
 	public HashMap <node_data, HashMap<Integer, edge_data>> EdgeMap;
 
 	public DGraph(){
-
-
 
 		this.nodeSize=0;
 		this.edgeSize=0;
