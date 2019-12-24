@@ -33,7 +33,6 @@ public class DGraph implements graph,Serializable{
 		node_data temp_node = NodeMap.get(src);
 		edge_data temp_edge = EdgeMap.get(temp_node).get(dest);
 		return temp_edge;
-
 	}
 
 

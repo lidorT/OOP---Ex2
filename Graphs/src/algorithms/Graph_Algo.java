@@ -28,12 +28,19 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 	private static final long serialVersionUID = 1L;
 	graph ga; 
 
+	
+	/**
+	 * This function initializes ga from a given graph.
+	 */
 	public void init(graph g) {
 
 		this.ga=g;
 	}
 
-	@Override
+
+	/**
+	 * 
+	 */
 	public void init(String file_name) {
 
 		try {
@@ -51,7 +58,9 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 		}
 	}
 
-
+	/**
+	 * 
+	 */
 	public void save(String file_name) {
 
 		try {
@@ -68,6 +77,9 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public boolean isConnected() {
 
 		boolean flag = true;
@@ -113,8 +125,10 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 		return flag;
 	}
 
-
-
+	
+	/**
+	 * 
+	 */
 	public double shortestPathDist(int src, int dest) {
 
 		//if(ga.getNode(src).getWeight() != 0 ) 
@@ -122,7 +136,10 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 		return ga.getNode(dest).getWeight();
 	}
 
-
+	
+	/**
+	 * 
+	 */
 	public List<node_data> shortestPath(int src, int dest) {
 
 		//if(ga.getNode(src).getWeight() != 0) 
@@ -141,13 +158,19 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 		return ans;
 	}
 
-
+	
+	/**
+	 * 
+	 */
 	public List<node_data> TSP(List<Integer> targets) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	
+	/**
+	 * This function return a deep copy graph of this.ga
+	 */
 	public graph copy() {
 
 		graph temp = new DGraph();
@@ -164,10 +187,16 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 		return temp;
 	}
 
+	
 
-
+     /////////////////////////////////////////////////
 	/////////////// Private Methods /////////////////
-
+   /////////////////////////////////////////////////
+	
+	
+	/**
+	 * This function changes all Tags to 0
+	 */
 	private void ClearTags() {
 
 		Collection<node_data> NodesCollection = ga.getV();
@@ -177,6 +206,10 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 		}
 	}
 
+	
+	/**
+	 * This function changes all Nodes Tag to 0 and weight to infinity
+	 */
 	private void resetNodes() {
 
 		Collection<node_data> NodesCollection = ga.getV();
@@ -188,6 +221,10 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 	}
 
 
+	/**
+	 * 
+	 * @param src - Integer that represent node key
+	 */
 	private void dijkstra(int src) {
 
 		resetNodes();
@@ -220,9 +257,4 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 
 
 
-
-
 }
-
-
-
