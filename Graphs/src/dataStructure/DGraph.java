@@ -7,11 +7,9 @@ import java.util.Collection;
 
 public class DGraph implements graph,Serializable{
 
-
 	private int MC;
 	private int nodeSize;
 	private int edgeSize;
-
 
 	public HashMap <Integer,node_data> NodeMap;
 	public HashMap <node_data, HashMap<Integer, edge_data>> EdgeMap;
@@ -46,7 +44,6 @@ public class DGraph implements graph,Serializable{
 			this.EdgeMap.put(n,new HashMap<Integer,edge_data>());
 			nodeSize++;
 			MC++;
-
 		}
 	}
 

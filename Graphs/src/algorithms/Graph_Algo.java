@@ -1,6 +1,5 @@
 package algorithms;
 
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -8,33 +7,13 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
-import java.util.Stack;
-
-
-
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Stack;
-
-
+import java.util.Collections;
 import dataStructure.DGraph;
-import dataStructure.Edge;
-import dataStructure.Node;
 import dataStructure.edge_data;
 import dataStructure.graph;
 import dataStructure.node_data;
@@ -43,13 +22,11 @@ import dataStructure.node_data;
  * This empty class represents the set of graph-theory algorithms
  * which should be implemented as part of Ex2 - Do edit this class.
  * @author 
- *
  */
 public class Graph_Algo implements graph_algorithms,Serializable{
 
-
+	private static final long serialVersionUID = 1L;
 	graph ga; 
-
 
 	public void init(graph g) {
 
@@ -59,9 +36,7 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 	@Override
 	public void init(String file_name) {
 
-
 		try {
-
 			FileInputStream fileIn = new FileInputStream(file_name);
 			ObjectInputStream objectIn = new ObjectInputStream(fileIn);
 
@@ -70,13 +45,10 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 			System.out.println("The Object has been read from the file");
 			objectIn.close();
 			fileIn.close();
-
-		} catch (Exception ex) {
+		} 
+		catch (Exception ex) {
 			ex.printStackTrace();
-
 		}
-
-
 	}
 
 
@@ -90,9 +62,7 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 			o.close();
 			f.close();
 		}
-
-		catch (IOException e) 
-		{
+		catch (IOException e) {
 			e.printStackTrace();
 			System.out.println("could not read file");
 		}
@@ -108,7 +78,7 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 
 		for (int i=0;i<Nodes_arr.length && flag ;i++) {
 
-			ClearTags(ga.getV());
+			ClearTags();
 			node_data current = Nodes_arr[i];
 			current.setTag(1);
 			Nq.add(current);
@@ -128,44 +98,56 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 						Nq.add(ga.getNode(myEdge.getDest()));
 					}
 				}
-				
 				head.setTag(2);
 				if(Nq.peek().getTag() == 2){
-					
+
 					Nq.poll();
 					visitCounter++;
 				}
-
 			}
 			if(visitCounter != Nodes_arr.length){
-				
+
 				flag = false;
 			}
-
 		}	
 		return flag;
 	}
 
 
-	@Override
+
 	public double shortestPathDist(int src, int dest) {
-		// TODO Auto-generated method stub
-		return 0;
+
+		//if(ga.getNode(src).getWeight() != 0 ) 
+		dijkstra(src);
+		return ga.getNode(dest).getWeight();
 	}
 
-	@Override
+
 	public List<node_data> shortestPath(int src, int dest) {
-		// TODO Auto-generated method stub
-		return null;
+
+		//if(ga.getNode(src).getWeight() != 0) 
+		dijkstra(src);
+
+		List<node_data> ans = new ArrayList<node_data>();
+		node_data tempNode = ga.getNode(dest);
+
+		while(tempNode.getKey() != src){
+
+			ans.add(tempNode);
+			tempNode = ga.getNode(Integer.parseInt(tempNode.getInfo()));
+		}
+		ans.add(tempNode);
+		Collections.reverse(ans);
+		return ans;
 	}
 
-	@Override
+
 	public List<node_data> TSP(List<Integer> targets) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
+	
 	public graph copy() {
 
 		graph temp = new DGraph();
@@ -183,55 +165,60 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 	}
 
 
-	private int DFS (graph check ,int start, int visited) {
-
-		if (ga.nodeSize() == visited) {
-			return visited;
-		}
-		else {
-			visited++;
-			node_data startNode = check.getNode(start);
-			startNode.setTag(2);
-			Collection<edge_data> edges =check.getE(start);
-			for (edge_data e : edges) {
-				node_data des = check.getNode(e.getDest());
-				if(des.getTag() != 2) {
-					return DFS(check, e.getDest(), visited);
-				}
-			}
-		}
-		return -1;
-	}
-
 
 	/////////////// Private Methods /////////////////
 
-	private void ClearTags(Collection<node_data> NodesCollection) {
+	private void ClearTags() {
 
-		for (node_data temp : NodesCollection) {
+		Collection<node_data> NodesCollection = ga.getV();
+
+		for (node_data temp: NodesCollection) {
 			temp.setTag(0);
 		}
 	}
 
-	public boolean MyDFS (node_data start, node_data end) {
+	private void resetNodes() {
 
-		Collection<edge_data> edges_collect = this.ga.getE(start.getKey());
-
-		for (edge_data myEdge: edges_collect) {
-
-			if (myEdge.getDest()==end.getKey()) {
-
-				return true;
-
-			}
-
-
+		Collection<node_data> NodesCollection = ga.getV();
+		for (node_data node: NodesCollection) 
+		{
+			node.setTag(0);
+			node.setWeight(Double.MAX_VALUE);
 		}
-		return false;
-
-
-
 	}
+
+
+	private void dijkstra(int src) {
+
+		resetNodes();
+		Queue<node_data> Nq = new LinkedList<node_data>();
+		ga.getNode(src).setWeight(0);
+		Nq.add(ga.getNode(src));
+
+		while(!Nq.isEmpty()){
+
+			node_data temp1 = Nq.poll();
+			Collection<edge_data> Edges = ga.getE(temp1.getKey());
+
+			for(edge_data edge: Edges){
+
+				double weightNode = temp1.getWeight();
+				node_data temp2 = ga.getNode(edge.getDest());
+				double weightEdge = edge.getWeight();
+
+				if(temp2.getTag() != 1)
+					if(weightEdge + weightNode < temp2.getWeight()) 
+					{
+						Nq.remove(temp2);
+						temp2.setWeight(weightEdge + weightNode);
+						temp2.setInfo("" + temp1.getKey());
+						Nq.add(temp2);
+					}
+			}
+		}
+	}
+
+
 
 
 
