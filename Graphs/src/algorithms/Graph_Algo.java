@@ -9,10 +9,14 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Stack;
 
 import dataStructure.DGraph;
+import dataStructure.Edge;
+import dataStructure.Node;
 import dataStructure.edge_data;
 import dataStructure.graph;
 import dataStructure.node_data;
@@ -77,44 +81,91 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 	        }
 	}
 
-
 	public boolean isConnected() {
 		
 		boolean flag = false;
-		Collection<node_data> Nodes = ga.getV();
+		int false_coutner=0;
+		Collection<node_data> vertex_collect = this.ga.getV();
+		 
+		node_data[] Nodes_arr = vertex_collect.toArray(new node_data[vertex_collect.size()]);
 		
-		node_data start = null;
-		for (node_data Node : Nodes) {
-			if (Node != null) {
-				flag = true;
-				start = Node;
-				break;
+		for (int i=0;i<Nodes_arr.length;i++) {
+			
+		node_data temp = Nodes_arr[i];
+			
+		for (int j=0;j<Nodes_arr.length;j++) {
+			while(flag!=true) {
+			if(!temp.equals(Nodes_arr[j])) {
+				
+				if(MyDFS(temp,Nodes_arr[j])==false) {
+					
+				Stack destNodes = new Stack();
+					
+				Collection<edge_data> edges_collect = this.ga.getE(temp.getKey());
+				
+				for (edge_data myEdge: edges_collect) {
+					
+					destNodes.add(myEdge);
+					
+				}
+				
+				if(MyDFS((node_data) destNodes.pop(),Nodes_arr[j])==true) flag=true;
+					
+					
+					
+				
+				
 			}
+			
+			
+			
 		}
-		
-		int visitedAll = DFS(ga, start.getKey(), 0);
-		if (visitedAll != ga.nodeSize()) return false;
-
-		Collection<node_data> ver = ga.getV();
-		graph reverse = new DGraph();
-
-		for (node_data v : ver) {
-			reverse.addNode(v);
+			}	
 		}
-
-		for (node_data v : ver) {
-			LinkedList<edge_data> source = (LinkedList<edge_data>)ga.getE(v.getKey());
-			for (edge_data e : source) {
-				reverse.connect(e.getDest(), e.getSrc(), e.getWeight());
-			}
 		}
-
-		visitedAll = DFS(reverse, start.getKey(), 0);
-		if (visitedAll != reverse.nodeSize())
-			return false;
-
-		return true;
+		return flag;
 	}
+	
+	
+	
+
+//	public boolean isConnected() {
+//		
+//		boolean flag = false;
+//		Collection<node_data> Nodes = ga.getV();
+//		
+//		node_data start = null;
+//		for (node_data Node : Nodes) {
+//			if (Node != null) {
+//				flag = true;
+//				start = Node;
+//				break;
+//			}
+//		}
+//		
+//		int visitedAll = DFS(ga, start.getKey(), 0);
+//		if (visitedAll != ga.nodeSize()) return false;
+//
+//		Collection<node_data> ver = ga.getV();
+//		graph reverse = new DGraph();
+//
+//		for (node_data v : ver) {
+//			reverse.addNode(v);
+//		}
+//
+//		for (node_data v : ver) {
+//			LinkedList<edge_data> source = (LinkedList<edge_data>)ga.getE(v.getKey());
+//			for (edge_data e : source) {
+//				reverse.connect(e.getDest(), e.getSrc(), e.getWeight());
+//			}
+//		}
+//
+//		visitedAll = DFS(reverse, start.getKey(), 0);
+//		if (visitedAll != reverse.nodeSize())
+//			return false;
+//
+//		return true;
+//	}
 
 	@Override
 	public double shortestPathDist(int src, int dest) {
@@ -172,6 +223,41 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 		return -1;
 	}
 	
-}
 	
+	/////////////// Private Methods /////////////////
+	
+	private void ClearTags() {
+		
+	Collection<node_data> NodesCollection = ga.getV();
+	
+	
+	for (node_data temp : NodesCollection) {
+		
+		temp.setTag(0);
+	
+		}
+	}
+	
+	public boolean MyDFS (node_data start, node_data end) {
+		
+		Collection<edge_data> edges_collect = this.ga.getE(start.getKey());
+		
+		for (edge_data myEdge: edges_collect) {
+			
+			if (myEdge.getDest()==end.getKey()) {
+				
+				return true;
+				
+		}
+			
+			
+		}
+		return false;
+		
+		
+	
+	}
+	
+	
+}
 	

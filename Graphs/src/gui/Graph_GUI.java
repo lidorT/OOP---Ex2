@@ -4,6 +4,7 @@ import javax.swing.JFrame;
 import dataStructure.DGraph;
 import dataStructure.Node;
 import dataStructure.graph;
+
 import utils.Point3D;
 import algorithms.Graph_Algo;
 import algorithms.graph_algorithms;
@@ -55,12 +56,16 @@ public class Graph_GUI {
 		
 		test.init(g);
 		
-		System.out.println(test.isConnected());
+	//	System.out.println(test.isConnected());
 		
 		graph test2 = new DGraph();
 		
 		test2 = test.copy();
 		System.out.println(test2);
+		
+		System.out.println(test.MyDFS(g.getNode(6),g.getNode(5)));
+		
+		
 //		test.save("test1.txt");
 //		
 //		test2.init("test1.txt");
