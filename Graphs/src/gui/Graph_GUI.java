@@ -13,6 +13,9 @@ public class Graph_GUI {
 	public static void main(String[] args) 
 	{
 		
+		
+		
+		
 		Point3D p1 = new Point3D (1,1,1);
 		Point3D p2 = new Point3D (2,2,2);
 		Point3D p3 = new Point3D (3,3,3);
@@ -107,6 +110,10 @@ public class Graph_GUI {
 //		test2.init("test1.txt");
 //		
 //		System.out.println("but thats alright");
+		
+		Window window = new Window(g);
+				window.setVisible(true);
+		
 		
 	}
 
