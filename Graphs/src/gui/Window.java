@@ -10,9 +10,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Collection;
 import java.util.LinkedList;
-
 import javax.swing.JFrame;
-
 import dataStructure.Edge;
 import dataStructure.edge_data;
 import dataStructure.graph;
@@ -21,6 +19,7 @@ import utils.Point3D;
 
 public class Window extends JFrame implements ActionListener, MouseListener
 {
+	private static final long serialVersionUID = 1L;
 	LinkedList<Point3D> points = new LinkedList<Point3D>();
 	graph graph;
 	
@@ -71,8 +70,6 @@ public class Window extends JFrame implements ActionListener, MouseListener
 	{
 		super.paint(g);
 		
-		//Point3D prev = null;
-		
 		for (Point3D p : points) 
 		{
 			g.setColor(Color.BLUE);
@@ -85,8 +82,7 @@ public class Window extends JFrame implements ActionListener, MouseListener
 			
 			for (edge_data newEdge : this.graph.getE(newNode.getKey())) {
 				
-				g.drawLine(this.graph.getNode(newEdge.getSrc()).getLocation().x(), this.graph.getNode(newEdge.getSrc()).getLocation().y(), this.graph.getNode(newEdge.getDest()).getLocation().x(), this.graph.getNode(newEdge.getDest()).getLocation().y());
-				
+				//g.drawLine(this.graph.getNode(newEdge.getSrc()).getLocation().x(), this.graph.getNode(newEdge.getSrc()).getLocation().y(), this.graph.getNode(newEdge.getDest()).getLocation().x(), this.graph.getNode(newEdge.getDest()).getLocation().y());
 			}
 			
 			
