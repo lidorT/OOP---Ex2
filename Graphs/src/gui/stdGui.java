@@ -90,7 +90,7 @@ public class stdGui {
 
 		for (node_data newNode : this.graph.getV()) 
 		{
-			StdDraw.setPenRadius(0.003);
+			StdDraw.setPenRadius(0.004);
             StdDraw.setPenColor(StdDraw.BLUE);
 			
 			for (edge_data newEdge : this.graph.getE(newNode.getKey())) {
