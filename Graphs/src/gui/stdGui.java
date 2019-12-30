@@ -67,6 +67,13 @@ public class stdGui {
 		
 		Graph_Algo ga = new Graph_Algo();
 		ga.init(g);
+		System.out.println(g.getMC());
+		System.out.println(ga.isConnected());
+		g.removeEdge(5,6);
+		System.out.println(g.getMC());
+		//System.out.println(ga.getMC());
+		System.out.println(ga.isConnected());
+		
 		List<node_data> ans = ga.TSP(targets);
 		
 		for(node_data noderrr: ans){

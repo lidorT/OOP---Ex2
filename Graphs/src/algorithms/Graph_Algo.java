@@ -37,12 +37,12 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 	 * This function initializes ga from a given graph.
 	 */
 	public void init(graph g) {
-		this.ga=g;
-		MCNode temp = new MCNode();
-		temp.setMC(g.getMC());
-		temp.setIsConnected(isConnected());
-		MCNodeMap.put(temp.getMC(), temp);
 		
+		this.ga=g;
+		//MCNode temp = new MCNode();
+		//temp.setMC(g.getMC());
+		//temp.setIsConnected(isConnected());
+		//MCNodeMap.put(temp.getMC(), temp);
 	}
 
 
@@ -66,6 +66,7 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 		}
 	}
 
+	
 	/**
 	 * 
 	 */
@@ -85,14 +86,15 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 		}
 	}
 
+	
 	/**
 	 * 
 	 */
 	public boolean isConnected() {
 
-		if (!this.MCNodeMap.containsKey(ga.getMC())){
+		//if (!MCNodeMap.containsKey(ga.getMC())){
 		
-		MCNodeMap.clear();
+		//MCNodeMap.clear();
 		boolean flag = true;
 		Collection<node_data> vertex_collect = this.ga.getV();
 		node_data[] Nodes_arr = vertex_collect.toArray(new node_data[vertex_collect.size()]);
@@ -134,24 +136,18 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 			}
 		}	
 		
-		MCNode temp = new MCNode();
-		temp.setMC(ga.getMC());
-		temp.setIsConnected(flag);
-		MCNodeMap.put(temp.getMC(), temp);
+//		MCNode temp = new MCNode();
+//		temp.setMC(ga.getMC());
+//		temp.setIsConnected(flag);
+//		MCNodeMap.put(temp.getMC(), temp);
 		
 		return flag;
-		
-		
 	}
-		else {
-			
-		
-			return MCNodeMap.get(ga.getMC()).IsConnected();
-			
-			
-			
-		}
-	}
+//		else {
+//			return MCNodeMap.get(ga.getMC()).IsConnected();
+//		}
+//	}
+	
 	
 	/**
 	 * 
