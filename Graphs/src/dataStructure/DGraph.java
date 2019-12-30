@@ -97,9 +97,7 @@ public class DGraph implements graph,Serializable{
 			MC++;
 			return EdgeMap.get(temp_node).remove(dest);
 		}
-
 		return null;
-
 	}
 
 	public int nodeSize() {
