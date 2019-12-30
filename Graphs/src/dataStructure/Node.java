@@ -10,7 +10,6 @@ public class Node implements node_data,Serializable{
 
 	private Point3D location;
 	public double weight;
-	public int previous;
 	public String info;
 	int tag=0;
 	

@@ -2,12 +2,15 @@ package gui;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
+import java.util.List;
 import dataStructure.DGraph;
 import dataStructure.Node;
 import dataStructure.edge_data;
 import dataStructure.graph;
+import algorithms.*;
 import gui.Graph_GUI;
 import dataStructure.node_data;
 import utils.Point3D;
@@ -54,7 +57,22 @@ public class stdGui {
 		g.connect(1,6,5);
 		g.connect(6,1,3.8);
 		g.connect(6,5,8.6);
+		g.connect(5,6,8.6);
 		
+		List<Integer> targets = new ArrayList<Integer>();
+		targets.add(6);
+		targets.add(4);
+		targets.add(5);
+		targets.add(1);
+		
+		Graph_Algo ga = new Graph_Algo();
+		ga.init(g);
+		List<node_data> ans = ga.TSP(targets);
+		
+		for(node_data noderrr: ans){
+			System.out.print(" "+noderrr.getKey()+"-->");
+		}
+
 		stdGui test = new stdGui();
 		test.run(g);
 	}

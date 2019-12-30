@@ -163,8 +163,22 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 	 * 
 	 */
 	public List<node_data> TSP(List<Integer> targets) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		List<node_data> ans = new ArrayList<node_data>();
+		Integer[] targets_arr = targets.toArray(new Integer[targets.size()]);
+		
+		for (int i=0;i<targets_arr.length-1;i++){
+			
+			List<node_data> temp =shortestPath(targets_arr[i], targets_arr[i+1]);
+			
+			for (node_data myNode : temp){
+				if(ans.size()>0){
+				if(myNode.getKey() != ans.get(ans.size()-1).getKey()) ans.add(myNode);
+				}
+				else ans.add(myNode);
+			}
+		}
+		return ans;
 	}
 
 	
