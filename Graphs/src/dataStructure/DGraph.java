@@ -7,6 +7,7 @@ import java.util.Collection;
 
 public class DGraph implements graph,Serializable{
 
+	private static final long serialVersionUID = 1L;
 	private int MC;
 	private int nodeSize;
 	private int edgeSize;
@@ -24,7 +25,7 @@ public class DGraph implements graph,Serializable{
 	}
 
 	public node_data getNode(int key) { 
-
+		
 		return this.NodeMap.get(key);
 	}
 
@@ -77,7 +78,6 @@ public class DGraph implements graph,Serializable{
 			for (node_data node_data : node_set) {
 				if (EdgeMap.get(node_data).remove(key)!=null) {
 				edgeSize--;
-				
 				}
 			}
 			edgeSize = (edgeSize) - (EdgeMap.get(temp_node).size());
@@ -110,17 +110,8 @@ public class DGraph implements graph,Serializable{
 		return this.edgeSize;
 	}
 
-
 	public int getMC() {
 		return this.MC;
 	}
-
-
-
-
-
-
-
-
 
 }

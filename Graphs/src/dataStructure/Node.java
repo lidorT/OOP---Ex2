@@ -7,7 +7,6 @@ public class Node implements node_data,Serializable{
 
 	private static final long serialVersionUID = 1L;
 	public int key;
-
 	private Point3D location;
 	public double weight;
 	public String info;
