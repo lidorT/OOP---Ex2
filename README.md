@@ -20,7 +20,7 @@
 
 * Our idea represented at the next form:
 
-Each DGraph has vertexes (Nodes) and Edges, Each DGraph has a HashMap field of his Nodes and each Node has also a HashMap field which contatins each of his Edges.
+Each DGraph has vertexes (Nodes) and Edges, Each DGraph has a HashMap field of Nodes wich there the key set as the Node Key and the values are the node_data, each DGraph also has another HashMap field which there each key is a node_data and its values are HashMaps of edge_data.
 
 for example to get a spesific edge we will search this edge inside the Nodes HashMap and for each node we will seach on his Edges HashMap. 
 
