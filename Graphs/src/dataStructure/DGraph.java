@@ -25,15 +25,22 @@ public class DGraph implements graph,Serializable{
 	}
 
 	public node_data getNode(int key) { 
-		
-		return this.NodeMap.get(key);
+
+		if(NodeMap.containsKey(key))return this.NodeMap.get(key);
+		return null;
 	}
 
 	public edge_data getEdge(int src, int dest) {
 
-		node_data temp_node = NodeMap.get(src);
-		edge_data temp_edge = EdgeMap.get(temp_node).get(dest);
-		return temp_edge;
+		if(NodeMap.containsKey(src) && NodeMap.containsKey(dest)){
+
+			if(EdgeMap.containsKey(NodeMap.get(src))){
+				node_data temp_node = NodeMap.get(src);
+				edge_data temp_edge = EdgeMap.get(temp_node).get(dest);
+				return temp_edge;
+			}
+		}
+		return null;
 	}
 
 
@@ -50,34 +57,45 @@ public class DGraph implements graph,Serializable{
 
 	public void connect(int src, int dest, double w) {
 
-		if (this.NodeMap.containsKey(src)) {
+		if (this.NodeMap.containsKey(src) && this.NodeMap.containsKey(dest)) {
 			node_data temp_node = NodeMap.get(src);
 			EdgeMap.get(temp_node).put(dest, new Edge(src,dest,w));
 			edgeSize++;
 			MC++;
+		}
+		else{
+			throw new RuntimeException("src/dest is not exist in the graph");
 		}
 	}
 
 
 	public Collection<node_data> getV() {
 
-		return NodeMap.values();
+		if(!this.NodeMap.isEmpty())return NodeMap.values();
+		return null;
 	}
 
+
 	public Collection<edge_data> getE(int node_id) {
-		
-		node_data temp_node = NodeMap.get(node_id);
-		return EdgeMap.get(temp_node).values(); 
+
+		if(NodeMap.containsKey(node_id)){
+			node_data temp_node = NodeMap.get(node_id);
+
+			if(EdgeMap.containsKey(temp_node)){
+				return EdgeMap.get(temp_node).values(); 
+			}
+		}
+		return null;
 	}
 
 	public node_data removeNode(int key) {
-		
+
 		if (NodeMap.containsKey(key)) {
 			node_data temp_node = NodeMap.get(key);
 			Set<node_data> node_set = EdgeMap.keySet();
 			for (node_data node_data : node_set) {
 				if (EdgeMap.get(node_data).remove(key)!=null) {
-				edgeSize--;
+					edgeSize--;
 				}
 			}
 			edgeSize = (edgeSize) - (EdgeMap.get(temp_node).size());
@@ -88,14 +106,18 @@ public class DGraph implements graph,Serializable{
 		}
 		return null;
 	}
-	
+
 	public edge_data removeEdge(int src, int dest) {
 
-		node_data temp_node = NodeMap.get(src);
-		if (EdgeMap.get(temp_node).containsKey(dest)) {
-			edgeSize--;
-			MC++;
-			return EdgeMap.get(temp_node).remove(dest);
+		if(NodeMap.containsKey(src)){
+			
+			node_data temp_node = NodeMap.get(src);
+			if (EdgeMap.get(temp_node).containsKey(dest)) {
+				
+				edgeSize--;
+				MC++;
+				return EdgeMap.get(temp_node).remove(dest);
+			}
 		}
 		return null;
 	}

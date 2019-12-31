@@ -21,19 +21,18 @@ import dataStructure.node_data;
 /**
  * This empty class represents the set of graph-theory algorithms
  * which should be implemented as part of Ex2 - Do edit this class.
- * @author 
+ * @author Zohar & Lidor 
  */
 public class Graph_Algo implements graph_algorithms,Serializable{
 
 	private static final long serialVersionUID = 1L;
 	graph ga; 
 
-	
+
 	/**
 	 * This function initializes ga from a given graph.
 	 */
 	public void init(graph g) {
-		
 		this.ga=g;
 	}
 
@@ -58,7 +57,7 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 		}
 	}
 
-	
+
 	/**
 	 * 
 	 */
@@ -78,14 +77,14 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 		}
 	}
 
-	
+
 	/**
 	 * 
 	 */
 	public boolean isConnected() {
 
 		//if (!MCNodeMap.containsKey(ga.getMC())){
-		
+
 		//MCNodeMap.clear();
 		boolean flag = true;
 		Collection<node_data> vertex_collect = this.ga.getV();
@@ -130,7 +129,7 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 		return flag;
 	}
 
-	
+
 	/**
 	 * 
 	 */
@@ -141,7 +140,7 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 		return ga.getNode(dest).getWeight();
 	}
 
-	
+
 	/**
 	 * 
 	 */
@@ -163,22 +162,33 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 		return ans;
 	}
 
-	
+
 	/**
 	 * 
 	 */
 	public List<node_data> TSP(List<Integer> targets) {
-		
+
 		List<node_data> ans = new ArrayList<node_data>();
 		Integer[] targets_arr = targets.toArray(new Integer[targets.size()]);
+
+		if(targets_arr.length>1){
+			
+			if (!this.isConnected()){
+				for (int i=1;i<targets_arr.length;i++){
+					if(ga.getNode(targets_arr[i]).getTag() == 0){
+						return null;
+					}
+				}
+			}
+		}
 		
 		for (int i=0;i<targets_arr.length-1;i++){
-			
-			List<node_data> temp =shortestPath(targets_arr[i], targets_arr[i+1]);
-			
+
+			List<node_data> temp = shortestPath(targets_arr[i], targets_arr[i+1]);
+
 			for (node_data myNode : temp){
 				if(ans.size()>0){
-				if(myNode.getKey() != ans.get(ans.size()-1).getKey()) ans.add(myNode);
+					if(myNode.getKey() != ans.get(ans.size()-1).getKey()) ans.add(myNode);
 				}
 				else ans.add(myNode);
 			}
@@ -186,7 +196,7 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 		return ans;
 	}
 
-	
+
 	/**
 	 * This function return a deep copy graph of this.ga
 	 */
@@ -206,13 +216,13 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 		return temp;
 	}
 
-	
 
-     /////////////////////////////////////////////////
+
+	/////////////////////////////////////////////////
 	/////////////// Private Methods /////////////////
-   /////////////////////////////////////////////////
-	
-	
+	/////////////////////////////////////////////////
+
+
 	/**
 	 * This function changes all Tags to 0
 	 */
@@ -225,7 +235,7 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 		}
 	}
 
-	
+
 	/**
 	 * This function changes all Nodes Tag to 0 and weight to infinity
 	 */

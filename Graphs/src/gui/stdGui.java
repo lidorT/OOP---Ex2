@@ -1,6 +1,5 @@
 package gui;
 
-import java.awt.Color;
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -11,7 +10,6 @@ import dataStructure.Node;
 import dataStructure.edge_data;
 import dataStructure.graph;
 import algorithms.*;
-import gui.Graph_GUI;
 import dataStructure.node_data;
 import utils.Point3D;
 import utils.StdDraw;
@@ -23,12 +21,13 @@ public class stdGui {
 	
 	public static void main(String[] args) {
 		
-		Point3D p1 = new Point3D (0.1,0.1,0.1);
-		Point3D p2 = new Point3D (0.2,0.2,0.2);
-		Point3D p3 = new Point3D (0.3,0.3,0.3);
-		Point3D p4 = new Point3D (0.4,0.4,0.4);
-		Point3D p5 = new Point3D (0.5,0.5,0.5);
-		Point3D p6 = new Point3D (0.5,0.1,0.5);
+		Point3D p1 = new Point3D (7,3,10);
+		Point3D p2 = new Point3D (05,8,9);
+		Point3D p3 = new Point3D (15,10,11);
+		Point3D p4 = new Point3D (12,7,0.4);
+		Point3D p5 = new Point3D (2,6,0.5);
+		Point3D p6 = new Point3D (8,1,0.5);
+		Point3D p7 = new Point3D (4,2,4);
 		
 		Node n1 = new Node (1, 5.2, p1);
 		Node n2 = new Node (2, 5.2, p2);
@@ -36,6 +35,7 @@ public class stdGui {
 		Node n4 = new Node (4, 5.2, p4);
 		Node n5 = new Node (5, 5.2, p5);
 		Node n6 = new Node (6,5.2,p6);
+		Node n7 = new Node (7,0,p7);
 		
 		DGraph g = new DGraph();
 		
@@ -45,6 +45,7 @@ public class stdGui {
 		g.addNode(n4);
 		g.addNode(n5);
 		g.addNode(n6);
+		g.addNode(n7);
 		
 		g.connect(1,2,3);
 		g.connect(2,1,11);
@@ -70,15 +71,16 @@ public class stdGui {
 		System.out.println(g.getMC());
 		System.out.println(ga.isConnected());
 		g.removeEdge(5,6);
-		System.out.println(g.getMC());
+		//System.out.println(g.getMC());
 		//System.out.println(ga.getMC());
-		System.out.println(ga.isConnected());
+		//System.out.println(ga.isConnected());
 		
-		List<node_data> ans = ga.TSP(targets);
+		//List<node_data> ans = ga.TSP(targets);
 		
-		for(node_data noderrr: ans){
-			System.out.print(" "+noderrr.getKey()+"-->");
-		}
+		//System.out.println(ans);
+//		for(node_data noderrr: ans){
+//			System.out.print(" "+noderrr.getKey()+"-->");
+//		}
 
 		stdGui test = new stdGui();
 		test.run(g);
@@ -89,7 +91,7 @@ public class stdGui {
 		initSettings();
 		initGraph(g);
 		initPoints();
-	//	initWeights();
+
 	}
 	
 	public void initSettings() {
@@ -111,8 +113,8 @@ public class stdGui {
             StdDraw.setPenColor(StdDraw.RED);
             StdDraw.point(p.x(), p.y());
 		}
+      
         
-
 		for (node_data newNode : this.graph.getV()) 
 		{
 			StdDraw.setPenRadius(0.004);
@@ -133,15 +135,22 @@ public class stdGui {
 	            StdDraw.setPenColor(StdDraw.BLACK);
 				StdDraw.text((x0+3*x1)/4,(y0+3*y1)/4,str);
 				StdDraw.setPenColor(StdDraw.BLUE);
-			}	
+				StdDraw.setPenRadius(0.02);
+	            StdDraw.setPenColor(StdDraw.MAGENTA);
+	            StdDraw.point((x0+5*x1)/6,(y0+5*y1)/6);
+				StdDraw.setPenColor(StdDraw.BLUE);
+				StdDraw.setPenRadius(0.004);
+			
+			}
+			
+			
+			
+			
 		}
-		
+		 
 	}
 		
-		public void initWeight() {
-			
-			
-		}
+		
 		
 		
 		
@@ -151,12 +160,19 @@ public class stdGui {
 	
 	private void getPoints (graph g){
 		
+		double max = 0.0;
+		double min = 0.0;
+		
 		Collection<node_data> nodes = g.getV();
 		
 		for (node_data node : nodes) 
 		{
+			if(node.getLocation().x() > max) max = node.getLocation().x();
+        	if(node.getLocation().x() < min) min = node.getLocation().x();
 			this.points.add(node.getLocation());
 		}	
+		min -= 2*min;
+		StdDraw.setScale(min, max*2);
 	}
 	
 	
