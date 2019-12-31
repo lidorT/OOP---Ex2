@@ -71,17 +71,13 @@ public class stdGui {
 		System.out.println(g.getMC());
 		System.out.println(ga.isConnected());
 		g.removeEdge(5,6);
-		//System.out.println(g.getMC());
-		//System.out.println(ga.getMC());
-		//System.out.println(ga.isConnected());
-		
+	
 		//List<node_data> ans = ga.TSP(targets);
 		
 		//System.out.println(ans);
 //		for(node_data noderrr: ans){
 //			System.out.print(" "+noderrr.getKey()+"-->");
 //		}
-
 		stdGui test = new stdGui();
 		test.run(g);
 	}
@@ -91,7 +87,6 @@ public class stdGui {
 		initSettings();
 		initGraph(g);
 		initPoints();
-
 	}
 	
 	public void initSettings() {
@@ -142,17 +137,8 @@ public class stdGui {
 				StdDraw.setPenRadius(0.004);
 			
 			}
-			
-			
-			
-			
 		}
-		 
 	}
-		
-		
-		
-		
 		
 	///////////////////////////
    ///// Private Methods /////
