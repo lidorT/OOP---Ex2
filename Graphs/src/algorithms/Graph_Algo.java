@@ -13,10 +13,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Collections;
-import java.util.HashMap;
-
 import dataStructure.DGraph;
-import dataStructure.MCNode;
 import dataStructure.edge_data;
 import dataStructure.graph;
 import dataStructure.node_data;
@@ -30,7 +27,6 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 
 	private static final long serialVersionUID = 1L;
 	graph ga; 
-	public HashMap <Integer,MCNode> MCNodeMap;
 
 	
 	/**
@@ -39,10 +35,6 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 	public void init(graph g) {
 		
 		this.ga=g;
-		//MCNode temp = new MCNode();
-		//temp.setMC(g.getMC());
-		//temp.setIsConnected(isConnected());
-		//MCNodeMap.put(temp.getMC(), temp);
 	}
 
 
@@ -135,19 +127,9 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 				flag = false;
 			}
 		}	
-		
-//		MCNode temp = new MCNode();
-//		temp.setMC(ga.getMC());
-//		temp.setIsConnected(flag);
-//		MCNodeMap.put(temp.getMC(), temp);
-		
 		return flag;
 	}
-//		else {
-//			return MCNodeMap.get(ga.getMC()).IsConnected();
-//		}
-//	}
-	
+
 	
 	/**
 	 * 
