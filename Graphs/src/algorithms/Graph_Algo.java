@@ -26,7 +26,7 @@ import dataStructure.node_data;
 public class Graph_Algo implements graph_algorithms,Serializable{
 
 	private static final long serialVersionUID = 1L;
-	graph ga; 
+	private graph ga; 
 
 
 	/**
@@ -83,9 +83,7 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 	 */
 	public boolean isConnected() {
 
-		//if (!MCNodeMap.containsKey(ga.getMC())){
-
-		//MCNodeMap.clear();
+		if(this.ga.nodeSize()>0){
 		boolean flag = true;
 		Collection<node_data> vertex_collect = this.ga.getV();
 		node_data[] Nodes_arr = vertex_collect.toArray(new node_data[vertex_collect.size()]);
@@ -127,6 +125,8 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 			}
 		}	
 		return flag;
+		}
+		return false;
 	}
 
 
@@ -137,6 +137,16 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 
 		//if(ga.getNode(src).getWeight() != 0 ) 
 		dijkstra(src);
+//if(targets_arr.length>1){
+//			
+//			if (!this.isConnected()){
+//				for (int i=1;i<targets_arr.length;i++){
+//					if(ga.getNode(targets_arr[i]).getTag() == 0){
+//						return null;
+//					}
+//				}
+//			}
+//		}
 		return ga.getNode(dest).getWeight();
 	}
 
@@ -207,6 +217,8 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 
 		for (node_data Node : Nodes) {
 			temp.addNode(Node);
+		}
+		for (node_data Node : Nodes) {
 			Collection<edge_data> Edges = ga.getE(Node.getKey());
 
 			for (edge_data Edge : Edges) {
