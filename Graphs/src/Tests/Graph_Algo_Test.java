@@ -26,7 +26,7 @@ public class Graph_Algo_Test {
 	@Test
 	public void InitGraph() {
 		
-		System.out.print("InitGraph: ");
+		System.out.println("InitGraph: ");
 		Graph_Algo ga = new Graph_Algo();
 		ga.init(g);
 		System.out.println("InitGraph success!");
@@ -35,12 +35,24 @@ public class Graph_Algo_Test {
 	@Test
 	public void InitString() { //init(String file_name)
 		
-		
+		System.out.println("InitString: ");
+		Graph_Algo ga = new Graph_Algo();
+		ga.init(g);
+		ga.save("Graph_to_file.txt");
+		Graph_Algo gaInit = new Graph_Algo();
+		gaInit.init("Graph_to_file.txt");
+		System.out.println("Original Graph_Algo before save to file, is connect? "+gaInit.isConnected());
+		System.out.println("New Graph_Algo that Init from String, is connect? "+ga.isConnected());
+		System.out.println();
 	}
 
 	@Test
 	public void Save() {
 		
+		System.out.println("Save: ");
+		GA.save("Graph_to_file.txt");
+		System.out.println("save was success!");
+		System.out.println();
 		
 	}
 
@@ -59,7 +71,7 @@ public class Graph_Algo_Test {
 	@Test
 	public void ShortestPathDist() {
 		
-		System.out.print("ShortestPathDist: ");
+		System.out.println("ShortestPathDist: ");
 
 		double dist = GA.shortestPathDist(1, 17);
 		System.out.println(dist);
@@ -103,9 +115,9 @@ public class Graph_Algo_Test {
 		
 		System.out.println("Copy: ");
 		graph g = GA.copy();
-		System.out.println("copy was success");
-		System.out.println("g edge size: "+g.edgeSize());
-		System.out.println("g node size: "+g.nodeSize());
+		System.out.println("copied graph edge size: "+g.edgeSize());
+		System.out.println("copied graph node size: "+g.nodeSize());
+		System.out.println("copy was success!");
 		System.out.println();
 	}
 	
