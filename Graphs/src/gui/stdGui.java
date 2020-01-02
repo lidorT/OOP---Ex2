@@ -137,31 +137,6 @@ public class stdGui {
 		g.connect(16,6,2);
 		g.connect(6,16,2);
 		
-		List<Integer> targets = new ArrayList<Integer>();
-		targets.add(6);
-		targets.add(4);
-		targets.add(12);
-		targets.add(14);
-		targets.add(9);
-		
-		Graph_Algo ga = new Graph_Algo();
-		ga.init(g);
-//		System.out.println(g.getMC());
-		System.out.println(ga.isConnected());
-//		g.removeEdge(5,6);
-		List<node_data> targets2  = ga.shortestPath(5,18);
-		for(node_data noderrr: targets2){
-			System.out.print(" "+noderrr.getKey()+"-->");
-		}
-//	
-		System.out.println();
-		List<node_data> ans = ga.TSP(targets);
-		
-		
-//		//System.out.println(ans);
-		for(node_data noderrr: ans){
-			System.out.print(" "+noderrr.getKey()+"-->");
-		}
 		stdGui test = new stdGui();
 		test.run(g);
 	}
@@ -245,8 +220,5 @@ public class stdGui {
 		max += 2;
 		StdDraw.setScale(min, max);
 	}
-	
-	
-	
 	
 }
