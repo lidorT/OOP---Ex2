@@ -73,8 +73,14 @@ public class Graph_Algo_Test {
 		
 		System.out.println("ShortestPathDist: ");
 
-		double dist = GA.shortestPathDist(1, 17);
+		double dist = GA.shortestPathDist(1, 2);
 		System.out.println(dist);
+		try{
+		double dist1 = GA.shortestPathDist(1, 22); //there is no vertix 22
+		}
+		catch(Exception e){
+			System.out.println("Error, there is no src or dest vertix.");
+		}
 		System.out.println();	
 	}
 
@@ -87,6 +93,13 @@ public class Graph_Algo_Test {
 		for(node_data node: ans){
 			System.out.print(" --> "+node.getKey());
 		}
+		try{
+			double dist1 = GA.shortestPathDist(1, 22); //there is no vertix 22
+			}
+			catch(Exception e){
+				System.out.println();
+				System.out.println("Error, there is no src or dest vertix.");
+			}
 		System.out.println();
 		System.out.println();
 	}
@@ -106,6 +119,21 @@ public class Graph_Algo_Test {
 		for(node_data node: ans){
 			System.out.print(" --> "+node.getKey());
 		}
+		
+		try{
+			targets.add(25);
+			targets.add(90); //there is no vertixs 25,90
+			List<node_data> ans1 = GA.TSP(targets);
+			
+			for(node_data node: ans1){
+				System.out.print(" --> "+node.getKey());
+			}
+			}
+			catch(Exception e){
+				System.out.println();
+				System.out.println("Error, there is no src or dest vertix.");
+			}
+		
 		System.out.println();
 		System.out.println();
 	}

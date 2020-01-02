@@ -19,9 +19,12 @@ import dataStructure.graph;
 import dataStructure.node_data;
 
 /**
- * This empty class represents the set of graph-theory algorithms
- * which should be implemented as part of Ex2 - Do edit this class.
- * @author Zohar & Lidor 
+ ** This class represents the set of graph-theory algorithms
+ * The class implements graph_algorithm interface and java's Serializable interface.
+ * Each Graph has some private fields:
+ * Each Graph_Algo has a field of graph named ga(graph algorithm).
+ * final long serialVersionUID = 1L - must be written as part of extending Serializable interface.
+ * © authors: Zohar and Lidor.
  */
 public class Graph_Algo implements graph_algorithms,Serializable{
 
@@ -30,7 +33,8 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 
 
 	/**
-	 * This function initializes ga from a given graph.
+	 * This function initializes ga field from a given graph.
+	 * @param g - an input graph.
 	 */
 	public void init(graph g) {
 		this.ga=g;
@@ -38,7 +42,8 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 
 
 	/**
-	 * 
+	 * This function initializes ga from a given text file.
+	 * @param file_name - the text file name.
 	 */
 	public void init(String file_name) {
 
@@ -59,7 +64,8 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 
 
 	/**
-	 * 
+	 *  saves the current graph into a text file.
+	 * 	@param file_name - the text file name.
 	 */
 	public void save(String file_name) {
 
@@ -79,84 +85,90 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 
 
 	/**
-	 * 
+	 * this method checks if the current graph is strongly connected or not.
 	 */
 	public boolean isConnected() {
 
 		if(this.ga.nodeSize()>0){
-		boolean flag = true;
-		Collection<node_data> vertex_collect = this.ga.getV();
-		node_data[] Nodes_arr = vertex_collect.toArray(new node_data[vertex_collect.size()]);
-		Queue<node_data> Nq = new LinkedList<node_data>();
-		int visitCounter = 0;
+			boolean flag = true;
+			Collection<node_data> vertex_collect = this.ga.getV();
+			node_data[] Nodes_arr = vertex_collect.toArray(new node_data[vertex_collect.size()]);
+			Queue<node_data> Nq = new LinkedList<node_data>();
+			int visitCounter = 0;
 
-		for (int i=0;i<Nodes_arr.length && flag ;i++) {
+			for (int i=0;i<Nodes_arr.length && flag ;i++) {
 
-			ClearTags();
-			node_data current = Nodes_arr[i];
-			current.setTag(1);
-			Nq.add(current);
-			visitCounter = 0;
+				ClearTags();
+				node_data current = Nodes_arr[i];
+				current.setTag(1);
+				Nq.add(current);
+				visitCounter = 0;
 
-			while(!Nq.isEmpty()) {
+				while(!Nq.isEmpty()) {
 
-				node_data head = Nq.peek();
-				Collection<edge_data> edges_collect = this.ga.getE(head.getKey());
+					node_data head = Nq.peek();
+					Collection<edge_data> edges_collect = this.ga.getE(head.getKey());
 
-				for (edge_data myEdge: edges_collect) {
+					for (edge_data myEdge: edges_collect) {
 
-					if(ga.getNode(myEdge.getDest()).getTag() != 2)
-						ga.getNode(myEdge.getDest()).setTag(1);
+						if(ga.getNode(myEdge.getDest()).getTag() != 2)
+							ga.getNode(myEdge.getDest()).setTag(1);
 
-					if(ga.getNode(myEdge.getDest()).getTag() != 2 && !Nq.contains(ga.getNode(myEdge.getDest()))){
-						Nq.add(ga.getNode(myEdge.getDest()));
+						if(ga.getNode(myEdge.getDest()).getTag() != 2 && !Nq.contains(ga.getNode(myEdge.getDest()))){
+							Nq.add(ga.getNode(myEdge.getDest()));
+						}
+					}
+					head.setTag(2);
+					if(Nq.peek().getTag() == 2){
+
+						Nq.poll();
+						visitCounter++;
 					}
 				}
-				head.setTag(2);
-				if(Nq.peek().getTag() == 2){
+				if(visitCounter != Nodes_arr.length){
 
-					Nq.poll();
-					visitCounter++;
+					flag = false;
 				}
-			}
-			if(visitCounter != Nodes_arr.length){
-
-				flag = false;
-			}
-		}	
-		return flag;
+			}	
+			return flag;
 		}
 		return false;
 	}
 
 
 	/**
-	 * 
+	 * this function returns the summary of the weight 
+	 * of all edges between the shortest path between source node to destination node.
+	 * @param src -  the source Node key.
+	 * @param dest-	 the destination Node key.
 	 */
 	public double shortestPathDist(int src, int dest) {
 
-		//if(ga.getNode(src).getWeight() != 0 ) 
-		dijkstra(src);
-//if(targets_arr.length>1){
-//			
-//			if (!this.isConnected()){
-//				for (int i=1;i<targets_arr.length;i++){
-//					if(ga.getNode(targets_arr[i]).getTag() == 0){
-//						return null;
-//					}
-//				}
-//			}
-//		}
+		if(IsExist(src) && IsExist(dest)){
+
+			if (!this.isConnected()){
+				if(ga.getNode(dest).getTag() == 0){
+					throw new RuntimeException("Error, there is no path between src to dest.");
+				}
+			}
+		}
+		else{
+			throw new RuntimeException("Error, there is no src or dest vertix.");
+		}
+		dijkstra(src); 
 		return ga.getNode(dest).getWeight();
 	}
 
 
 	/**
-	 * 
+	 *  return a list of the nodes you need to travel in order to pass the thrill
+	 *  between the given source node to the destination node within the shortest path.
+	 * @param src -  the source Node key.
+	 * @param dest-	 the destination Node key.
 	 */
 	public List<node_data> shortestPath(int src, int dest) {
 
-		//if(ga.getNode(src).getWeight() != 0) 
+		if(IsExist(src) && IsExist(dest)){
 		dijkstra(src);
 
 		List<node_data> ans = new ArrayList<node_data>();
@@ -170,19 +182,29 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 		ans.add(tempNode);
 		Collections.reverse(ans);
 		return ans;
+		}
+		throw new RuntimeException("Error, there is no src or dest vertix.");
 	}
 
 
 	/**
-	 * 
+	 * this function returns a List of nodes you have to travel 
+	 * at the most efficient way in order to travel all the nodes on the input List.
+	 * @param targets - a list of integers represents the Nodes keys.
 	 */
 	public List<node_data> TSP(List<Integer> targets) {
 
 		List<node_data> ans = new ArrayList<node_data>();
 		Integer[] targets_arr = targets.toArray(new Integer[targets.size()]);
 
+		for(int src:targets_arr){
+			if(!IsExist(src)){
+				throw new RuntimeException("Error, there is no src or dest vertix.");
+			}
+		}
+		
 		if(targets_arr.length>1){
-			
+
 			if (!this.isConnected()){
 				for (int i=1;i<targets_arr.length;i++){
 					if(ga.getNode(targets_arr[i]).getTag() == 0){
@@ -191,7 +213,7 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 				}
 			}
 		}
-		
+
 		for (int i=0;i<targets_arr.length-1;i++){
 
 			List<node_data> temp = shortestPath(targets_arr[i], targets_arr[i+1]);
@@ -236,6 +258,21 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 
 
 	/**
+	 * This functions checks if src node exist.
+	 * @param src - key of a node
+	 * @return true/false
+	 */
+	private boolean IsExist(int src) {
+
+		Collection<node_data> Nodes = ga.getV();
+		for(node_data node: Nodes){
+			if(node.getKey() == src) return true;
+		}
+		return false;
+	}
+
+
+	/**
 	 * This function changes all Tags to 0
 	 */
 	private void ClearTags() {
@@ -263,7 +300,7 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 
 
 	/**
-	 * 
+	 * dijkstra algorithm for more information : https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm.
 	 * @param src - Integer that represent node key
 	 */
 	private void dijkstra(int src) {

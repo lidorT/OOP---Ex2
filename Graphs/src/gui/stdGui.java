@@ -1,15 +1,12 @@
 package gui;
 
 import java.awt.Font;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
-import java.util.List;
 import dataStructure.DGraph;
 import dataStructure.Node;
 import dataStructure.edge_data;
 import dataStructure.graph;
-import algorithms.*;
 import dataStructure.node_data;
 import utils.Point3D;
 import utils.StdDraw;
@@ -141,24 +138,36 @@ public class stdGui {
 		test.run(g);
 	}
 	
-	
+	/**
+	 * This is the main function to run the GUI.
+	 * @param g - a given graph which will presented on GUI.
+	 */
 	public void run(graph g) {
 		initSettings();
 		initGraph(g);
 		initPoints();
 	}
-	
+	/**
+	 * simply sets the Canvas Size.
+	 */
 	public void initSettings() {
        StdDraw.setCanvasSize(600,650);
 	}
-	
+	/**
+	 * This method sets this graph to be an input graph and adds his 3D points to a LinkedList.
+	 * @param graph - a graph which will be presented on the GUI
+	 */
 	public void initGraph(graph graph)
 	{
 		this.graph=graph;
 		getPoints(this.graph);
 	}
 	
-	
+	/**
+	 * This method moves over this object linked list which contains all 3D Points
+	 * that should be presented on the graph and create each one of them and them's edges
+	 * into the GUI.
+	 */
 	public  void initPoints() {
 		
         for (Point3D p : points) 
@@ -203,6 +212,12 @@ public class stdGui {
    ///// Private Methods /////
   ///////////////////////////
 	
+	/**
+	 * This method gets a graph and saves his vertexes x and y values.
+	 * While saving the points we also want to get the minimum and maximum values 
+	 * in order to sacle the graph properly.
+	 * @param g - a given graph.
+	 */
 	private void getPoints (graph g){
 		
 		double max = 0.0;
