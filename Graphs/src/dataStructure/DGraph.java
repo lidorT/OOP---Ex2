@@ -60,8 +60,8 @@ public class DGraph implements graph,Serializable{
 
 		if(NodeMap.containsKey(src) && NodeMap.containsKey(dest)){
 
-			if(EdgeMap.containsKey(NodeMap.get(src))){
 				node_data temp_node = NodeMap.get(src);
+				if(EdgeMap.get(temp_node).containsKey(dest)) {
 				edge_data temp_edge = EdgeMap.get(temp_node).get(dest);
 				return temp_edge;
 			}
@@ -79,11 +79,14 @@ public class DGraph implements graph,Serializable{
 	 */
 	public void addNode(node_data n) {
 
-		if (!this.NodeMap.containsKey(n.getKey())) {
+		if (!this.NodeMap.containsKey(n.getKey()) ){
 			this.NodeMap.put(n.getKey(), n);
 			this.EdgeMap.put(n,new HashMap<Integer,edge_data>());
 			nodeSize++;
 			MC++;
+		}
+		else {
+			throw new RuntimeException("A vertex already exists in that key name");
 		}
 	}
 
@@ -170,7 +173,7 @@ public class DGraph implements graph,Serializable{
 	 */
 	public edge_data removeEdge(int src, int dest) {
 
-		if(NodeMap.containsKey(src)){
+		if(NodeMap.containsKey(src) && NodeMap.containsKey(dest)){
 
 			node_data temp_node = NodeMap.get(src);
 			if (EdgeMap.get(temp_node).containsKey(dest)) {

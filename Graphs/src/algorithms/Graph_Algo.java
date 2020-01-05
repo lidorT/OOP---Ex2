@@ -31,13 +31,29 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 	private static final long serialVersionUID = 1L;
 	private graph ga; 
 
-
+	/**
+	 * Default constructor.
+	 * @param g - a graph
+	 */
+	public Graph_Algo(graph g) {
+		this.ga = g;
+	}
+	
+	/**
+	 * Default constructor.
+	 * @param g - a graph
+	 */
+	public Graph_Algo() {
+		this.ga = null;
+	}
+	
+	
 	/**
 	 * This function initializes ga field from a given graph.
 	 * @param g - an input graph.
 	 */
 	public void init(graph g) {
-		this.ga=g;
+		this.ga = g;
 	}
 
 

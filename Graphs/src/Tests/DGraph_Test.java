@@ -60,8 +60,15 @@ public class DGraph_Test {
 		System.out.println("AddNode: ");
 		Point3D p = new Point3D (18,5,4);
 		Node n = new Node (1, 5.6, p);
-		Dg.addNode(n);
-		System.out.println("Adding node: "+n);
+		Node n8 = new Node (8, 5.6, p);
+		Dg.addNode(n8);
+		System.out.println("Adding node: "+n8);
+		try {
+			Dg.addNode(n);
+		}
+		catch(Exception e){
+			System.err.println("ERROR, there is already node with the same key");
+		}
 		System.out.println();
 	}
 

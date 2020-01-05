@@ -48,7 +48,7 @@ public class FinalGui {
 		Node n17 = new Node (17, 6, p17);
 		Node n18 = new Node (18, 5.8, p18);
 		Node n19 = new Node (19, 8, p19);
-
+		
 		graph g = new DGraph();
 
 		g.addNode(n1);
@@ -124,14 +124,9 @@ public class FinalGui {
 		g.connect(19,15,2);
 		g.connect(16,6,2);
 		g.connect(6,16,2);
-	//	g.removeNode(3);
-		//stdGui test = new stdGui();
 		
-		
-		Window Window = new Window(g);
-		
+		Window Window = new Window(g);		
 		Window.setVisible(true);
-		//Window.repaint();
 	}
 
 }

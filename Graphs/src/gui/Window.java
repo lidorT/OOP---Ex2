@@ -24,24 +24,52 @@ import dataStructure.graph;
 import dataStructure.node_data;
 import utils.Point3D;
 
+
+/**
+ *This class represents a visual display of the Graph.
+ *This class extends JFrame and implements ActionListener..
+ *Each window has some private fields:
+ *graph graph - a field to save the given graph needs to be presented.
+ *static final long serialVersionUID - must be written according to eclipse.
+ *LinkedList points - a linked list that will be filled with the graph vertexes
+ *
+ *### IMPORTENT ISSUE : this class represents a visual display of the graph ###
+ *### Our graph data structure supports the option of inserting any 3DPoint ###
+ *### you wishes BUT ###
+ *### there is a visual mess if your   ###
+ *### insert points are too close to each others or if the  ###
+ *### points are outside of your screen resolution. ###
+ *### It is also important to take in count that JFrame works with frames ###
+ *### and not coordinates therefore adding a points with the next x and y values won't ### 
+ *###be displayed on a the Graph GUI :###
+ *### x - Should be between 20 - 1000 ###
+ *### y - Should be between 50 - 1000 ###
+ *### if you'll enter your 3DPoints coordinates according to the ###
+ *### written above you will be able to see them also in our Graph display window.###
+ *
+ *
+ *for further information please visit our repository wiki page:
+ *https://github.com/lidorT/OOP---Ex2/issues/1
+ * © authors: Zohar and Lidor.
+ */
+
+
+
 public class Window extends JFrame implements ActionListener
 {
 
-	private int MC;
 	private graph graph;
 	private static final long serialVersionUID = 1L;
 	LinkedList<Point3D> points = new LinkedList<Point3D>();
 
 	public Window(){
 		this.graph =null;
-		MC = 0;
 		initGUI();
 	}
 
 	public Window(graph g)
 	{
 		this.graph=g;
-		this.MC = g.getMC();
 		initGUI();
 	}
 
@@ -50,8 +78,6 @@ public class Window extends JFrame implements ActionListener
 	 * This function purpose is to initialize the GUI.
 	 * Here we set the GUI size, we creates the menu bar and adds its options.
 	 */
-	
-	
 	private void initGUI() 
 	{
 		this.setSize(700, 700);
@@ -96,11 +122,11 @@ public class Window extends JFrame implements ActionListener
 		Graph_Algorithms.add(TSP);
 	}
 
+	
 	/**
 	 * paint functions is the basic function that paints the graph as JFrame required.
 	 * we set the points(Node) and the edges inside the graph.
 	 * we set the size of the points, lines , weights and more.
-	 * 
 	 */
 	public void paint(Graphics g)
 	{
@@ -111,12 +137,12 @@ public class Window extends JFrame implements ActionListener
 			for (node_data node_data : Vertexes) {
 				Point3D TempPoint = node_data.getLocation();
 				
-				if(node_data.getTag()!=8 && node_data.getTag()!=9) g.setColor(Color.RED);
-				if(node_data.getTag()==8) {
+				if(node_data.getTag()!=8 && node_data.getTag() != 9) g.setColor(Color.RED);
+				if(node_data.getTag() == 8) {
 					g.setColor(Color.CYAN);
 					node_data.setTag(0);
 				}
-				if(node_data.getTag()==9) {
+				if(node_data.getTag() == 9) {
 					g.setColor(Color.BLUE);
 					node_data.setTag(0);
 				}
@@ -130,9 +156,7 @@ public class Window extends JFrame implements ActionListener
 						g.setColor(Color.RED);
 					}
 					else {
-				
 						g.setColor(Color.DARK_GRAY);
-						
 					}
 					node_data dest = graph.getNode(edge_data.getDest());
 					Point3D TempPoint2 = dest.getLocation();
@@ -153,13 +177,14 @@ public class Window extends JFrame implements ActionListener
 		}
 	}
 
+	
 	/**
 	 * this function simply connects the GUI button " Save "  to the Graph_Algo function save.
 	 */
 	private void Save() {
+		
 		Graph_Algo graphalgo = new Graph_Algo();
 		graphalgo.init(this.graph);
-
 		JFrame Frame = new JFrame();
 		JFileChooser Choose = new JFileChooser();
 		Choose.setDialogTitle("Save a file");   
@@ -174,6 +199,7 @@ public class Window extends JFrame implements ActionListener
 
 	}
 
+	
 	/**
 	 * this function simply connects the GUI button " Load "  to the Graph_Algo function Load.
 	 */
@@ -181,7 +207,7 @@ public class Window extends JFrame implements ActionListener
 		Graph_Algo graphalgo = new Graph_Algo();
 		JFrame Frame = new JFrame();
 		JFileChooser Choose = new JFileChooser();
-		Choose.setDialogTitle("Specify a file to load");   
+		Choose.setDialogTitle("Load a file");   
 		int userSelection = Choose.showOpenDialog(Frame);
 
 		if (userSelection == JFileChooser.APPROVE_OPTION) {
@@ -193,10 +219,12 @@ public class Window extends JFrame implements ActionListener
 		}
 	}
 
+	
 	/**
-	 * this function simply connects the GUI button " shortestPathDist "  to the Graph_Algo function shortestPathDist.
+	 * This function simply connects the GUI button "shortestPathDist" to the Graph_Algo function shortestPathDist.
 	 */
 	private void shortestPathDist() {
+		
 		JFrame Frame = new JFrame();
 		String src = JOptionPane.showInputDialog(
 				null, "Please enter the source Node key");
@@ -217,6 +245,7 @@ public class Window extends JFrame implements ActionListener
 	
 	}
 
+	
 	/**
 	 * This function simply connects the GUI button " shortestPath "  to the Graph_Algo function shortestPath.
 	 * after getting the shortest path we also mark the path with red for an easier view.
@@ -259,11 +288,11 @@ public class Window extends JFrame implements ActionListener
 		}
 	}
 
+	
 	/**
 	 *This function simply connects the GUI button " TSP "  to the Graph_Algo function TSP.
 	 *Here you'll have to enter each key of node you want to travel and in order to stop to enter Stop.
 	 */
-
 	private void TSP() {
 		
 		JFrame Frame = new JFrame();
@@ -305,20 +334,28 @@ public class Window extends JFrame implements ActionListener
 		}
 	}
 	
+	
+	/**
+	 * This function checks if the graph is Strongly connected with the use
+	 * of IsConnected function from Graph_Algo class.
+	 */
 	private void isConnected() {
+		
 		JFrame Frame = new JFrame();
 		Graph_Algo graph_algo = new Graph_Algo();
 		graph_algo.init(this.graph);
-		boolean ans = graph_algo.isConnected();
-		if (ans == true) {
+		if (graph_algo.isConnected()) {
 			JOptionPane.showMessageDialog(Frame, "this graph is connected");
 		}
 		else {
 			JOptionPane.showMessageDialog(Frame, "the graph is not connected");
 		}
-
 	}
 
+	
+	/**
+	 * This function receives ActionEvent e that represents the button that have been pressed.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) 
 	{
@@ -341,7 +378,6 @@ public class Window extends JFrame implements ActionListener
 		break;
 		default:
 			break;
-
 		}
 	}
 

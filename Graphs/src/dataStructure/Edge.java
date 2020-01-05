@@ -86,7 +86,7 @@ public class Edge implements edge_data,Serializable{
 
 
 	/**
-	 * Setter to an edge's info wich will be used later on with the graph algorithm.
+	 * Setter to an edge's info witch will be used later on with the graph algorithm.
 	 */
 	public void setInfo(String s) {
 		this.info=s;
