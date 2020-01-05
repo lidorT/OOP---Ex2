@@ -31,11 +31,23 @@ public class Point3D implements Serializable
     /////////////////////////////////////////////////////////////////
     public Point3D(double x,double y,double z)
     {
-        _x=x;
-        _y=y;
-        _z=z;
+    	
+    	
+        _x=DoubleFixer(x);
+        _y=DoubleFixer(y);
+        _z=DoubleFixer(z);
     }
 
+    private double DoubleFixer (double x) {
+    	
+    	String str = Double.toString(x);
+		str=String.format("%.5g%n",x);
+		x= Double.parseDouble(str);
+    	
+    	return x;
+    	
+    }
+    
     public Point3D(Point3D p)
     {
        this(p.x(), p.y(), p.z());

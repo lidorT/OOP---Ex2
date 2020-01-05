@@ -46,6 +46,9 @@ public class Edge implements edge_data,Serializable{
 		
 		this.src=src;
 		this.dest=dest;
+		String str = Double.toString(weight);
+		str=String.format("%.5g%n",weight);
+		weight= Double.parseDouble(str);
 		this.weight=weight;
 	}
 

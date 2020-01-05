@@ -1,12 +1,16 @@
 package gui;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Menu;
 import java.awt.MenuBar;
 import java.awt.MenuItem;
+import java.awt.Stroke;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.Line2D;
+import java.awt.Graphics2D;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -23,19 +27,21 @@ import utils.Point3D;
 public class Window extends JFrame implements ActionListener
 {
 
-
+	private int MC;
 	private graph graph;
 	private static final long serialVersionUID = 1L;
 	LinkedList<Point3D> points = new LinkedList<Point3D>();
 
 	public Window(){
 		this.graph =null;
+		MC = 0;
 		initGUI();
 	}
 
 	public Window(graph g)
 	{
 		this.graph=g;
+		this.MC = g.getMC();
 		initGUI();
 	}
 
@@ -104,13 +110,22 @@ public class Window extends JFrame implements ActionListener
 			Collection <node_data> Vertexes = this.graph.getV();
 			for (node_data node_data : Vertexes) {
 				Point3D TempPoint = node_data.getLocation();
-				g.setColor(Color.RED);
-				g.fillOval(TempPoint.ix(), TempPoint.iy(), 10, 10);
+				
+				if(node_data.getTag()!=8 && node_data.getTag()!=9) g.setColor(Color.RED);
+				if(node_data.getTag()==8) {
+					g.setColor(Color.CYAN);
+					node_data.setTag(0);
+				}
+				if(node_data.getTag()==9) {
+					g.setColor(Color.BLUE);
+					node_data.setTag(0);
+				}
+				g.fillOval(TempPoint.ix(), TempPoint.iy(), 12, 12);
 				g.setColor(Color.BLACK);
 				g.drawString(Integer.toString(node_data.getKey()), (TempPoint.ix()+1), (TempPoint.iy()-2));
 				Collection<edge_data> Edge = this.graph.getE(node_data.getKey());
 				for (edge_data edge_data : Edge) {
-					if (edge_data.getTag() ==9999) {
+					if (edge_data.getTag() == 9) {
 						edge_data.setTag(0);
 						g.setColor(Color.RED);
 					}
@@ -122,13 +137,16 @@ public class Window extends JFrame implements ActionListener
 					node_data dest = graph.getNode(edge_data.getDest());
 					Point3D TempPoint2 = dest.getLocation();
 					if (TempPoint2 != null) {
-						g.drawLine(TempPoint.ix(), TempPoint.iy(),
-								TempPoint2.ix(), TempPoint2.iy());
-						g.drawString(Double.toString(edge_data.getWeight()),(TempPoint.ix()+TempPoint2.ix())/2 , (TempPoint.iy()+TempPoint2.iy())/2);
+						
+						Stroke tempo = new BasicStroke(2f);
+						((Graphics2D) g).setStroke(tempo);
+						((Graphics2D) g).draw(new Line2D.Double(TempPoint.ix(), TempPoint.iy(),
+								TempPoint2.ix(), TempPoint2.iy()));
+						g.drawString(Double.toString(edge_data.getWeight()),(TempPoint.ix()+5*TempPoint2.ix())/6 , (TempPoint.iy()+5*TempPoint2.iy())/6);
 						g.setColor(Color.GREEN);
 						int XFrame =((((((TempPoint.ix()+TempPoint2.ix())/2)+TempPoint2.ix())/2)+TempPoint2.ix())/2);
 						int YFrame = ((((((TempPoint.iy()+TempPoint2.iy())/2)+TempPoint2.iy())/2)+TempPoint2.iy())/2);
-						g.fillOval(XFrame, YFrame, 6, 6);	
+						g.fillOval(XFrame, YFrame, 8, 8);	
 					}
 				}
 			}
@@ -184,47 +202,60 @@ public class Window extends JFrame implements ActionListener
 				null, "Please enter the source Node key");
 		String dest = JOptionPane.showInputDialog(
 				null, "Please enter your destination Node key");
+		Graph_Algo graphalgo = new Graph_Algo();
+		graphalgo.init(this.graph);
 		try {
-			Graph_Algo graphalgo = new Graph_Algo();
-			graphalgo.init(this.graph);
-			double ans = graphalgo.shortestPathDist(Integer.parseInt(src), Integer.parseInt(dest));
-			String s = Double.toString(ans);	
-			JOptionPane.showMessageDialog(Frame, "The shortest distance you hat to travel is : " + s);
+			int s = Integer.parseInt(src);
+			int d = Integer.parseInt(dest);
 		}
 		catch (Exception e) {
-			e.printStackTrace();
+			throw new RuntimeException("One of your inputs src/dest is not an Integer");
 		}
+		double ans = graphalgo.shortestPathDist(Integer.parseInt(src), Integer.parseInt(dest));
+		String s = Double.toString(ans);	
+		JOptionPane.showMessageDialog(Frame, "The shortest distance you hat to travel is : " + s);
+	
 	}
 
 	/**
 	 * This function simply connects the GUI button " shortestPath "  to the Graph_Algo function shortestPath.
 	 * after getting the shortest path we also mark the path with red for an easier view.
+	 * we also mark the first Node of the path color to Cyan and all the other Nodes
+	 * inside the path to Blue.
 	 */
 	private void shortestPath() {
+		
 		JFrame Frame = new JFrame();
 		String s = "";
 		String src = JOptionPane.showInputDialog(
 				null, "Please enter the source Node key");
 		String dest = JOptionPane.showInputDialog(
 				null, "Please enter your destination Node key");
+		Graph_Algo graphalgo = new Graph_Algo();
+		graphalgo.init(this.graph);
+		
 		if (!src.equals(dest)) {
 			try {
-				Graph_Algo gg = new Graph_Algo();
-				gg.init(this.graph);
-				ArrayList<node_data> shortPath = new ArrayList<node_data>();
-				shortPath = (ArrayList<node_data>) gg.shortestPath(Integer.parseInt(src), Integer.parseInt(dest));
-				for (int i =0 ; i+1 < shortPath.size() ; i++) {
-					this.graph.getEdge(shortPath.get(i).getKey(), shortPath.get(i+1).getKey()).setTag(9999);
-					s+= shortPath.get(i).getKey() + "--> ";
-				}
-				s+= shortPath.get(shortPath.size()-1).getKey();
-				repaint();
-				JOptionPane.showMessageDialog(Frame, "the shortest path is: " +s);
-
+				int src2 = Integer.parseInt(src);
+				int dest2 = Integer.parseInt(dest);
 			}
 			catch (Exception e) {
-				e.printStackTrace();
+				throw new RuntimeException("One of your inputs src/dest is not an Integer");
 			}
+			ArrayList<node_data> shortPath = new ArrayList<node_data>();
+			shortPath = (ArrayList<node_data>) graphalgo.shortestPath(Integer.parseInt(src), Integer.parseInt(dest));
+			for (int i = 0 ; i+1 < shortPath.size() ; i++) {
+				this.graph.getEdge(shortPath.get(i).getKey(), shortPath.get(i+1).getKey()).setTag(9);
+				s+= shortPath.get(i).getKey() + "---> ";
+				if(i==0) {
+					this.graph.getNode(shortPath.get(i).getKey()).setTag(8);
+				}
+				else this.graph.getNode(shortPath.get(i).getKey()).setTag(9);
+			}
+			s+= shortPath.get(shortPath.size()-1).getKey();
+			this.graph.getNode(shortPath.get(shortPath.size()-1).getKey()).setTag(9);
+			repaint();
+			JOptionPane.showMessageDialog(Frame, "the shortest path is: " +s);
 		}
 	}
 
@@ -234,6 +265,7 @@ public class Window extends JFrame implements ActionListener
 	 */
 
 	private void TSP() {
+		
 		JFrame Frame = new JFrame();
 		Graph_Algo graph_algo = new Graph_Algo();
 		graph_algo.init(this.graph);
@@ -241,21 +273,30 @@ public class Window extends JFrame implements ActionListener
 		String tempSrc = "";
 		String temp = "";
 		do {
-			tempSrc = JOptionPane.showInputDialog(
-					null, "Enter a key, to stop this dialog please isert the word Stop");
+			tempSrc = JOptionPane.showInputDialog(null, "Enter a key, to stop this dialog please isert the word Stop");
 			if ((!tempSrc.equals("Stop"))) {
+				try {
+					int parse = Integer.parseInt(tempSrc);
+				}
+				catch(Exception e) {
+					throw new RuntimeException("One of your inputs is not an Integer");
+				}
 				targets.add(Integer.parseInt(tempSrc));
 			}
 		}
 		while(!tempSrc.equals("Stop"));
 		ArrayList<node_data> shortPath = new ArrayList<node_data>();
 		shortPath = (ArrayList<node_data>) graph_algo.TSP(targets);
-		if (shortPath != null ) {
-			for (int i =0 ; i+1 < shortPath.size() ; i++) {
-				this.graph.getEdge(shortPath.get(i).getKey(), shortPath.get(i+1).getKey()).setTag(9999);
-				temp+= shortPath.get(i).getKey() + "---> ";
+		if (shortPath != null ) 
+		{
+			for (int i = 0 ; i+1 < shortPath.size() ; i++) {
+				this.graph.getEdge(shortPath.get(i).getKey(), shortPath.get(i+1).getKey()).setTag(9);
+				temp += shortPath.get(i).getKey() + "---> ";
+				this.graph.getNode(shortPath.get(i).getKey()).setTag(9);
 			}
-			temp+= shortPath.get(shortPath.size()-1).getKey();
+			temp += shortPath.get(shortPath.size()-1).getKey();
+			this.graph.getNode(shortPath.get(0).getKey()).setTag(8);
+			this.graph.getNode(shortPath.get(shortPath.size()-1).getKey()).setTag(9);
 			repaint();
 			JOptionPane.showMessageDialog(Frame, "the shortest path on this graph is: " +temp);
 		}

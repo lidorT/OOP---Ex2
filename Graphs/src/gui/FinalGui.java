@@ -124,7 +124,7 @@ public class FinalGui {
 		g.connect(19,15,2);
 		g.connect(16,6,2);
 		g.connect(6,16,2);
-
+	//	g.removeNode(3);
 		//stdGui test = new stdGui();
 		
 		
