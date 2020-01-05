@@ -32,4 +32,4 @@ There is also a class Named Graph_Algo that suppourts someo actions such as "Is 
 
 example of the plot :
 
-![ExampleOfPlot](https://media.giphy.com/media/U2F9HnI1Xqy2ypJaOb/giphy.gif)
+![ExampleOfPlot](https://i.imgur.com/MHRUO91.jpg)
